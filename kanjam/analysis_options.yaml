@@ -1,0 +1,7 @@
+# Flutter's recommended lints. Run `dart fix --apply` once to auto-apply the
+# const / style suggestions, then `flutter analyze`.
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    avoid_print: true
