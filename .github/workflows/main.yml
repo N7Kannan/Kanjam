@@ -6,30 +6,33 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: kanjam
+    timeout-minutes: 45
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: '21'
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
 
+      - name: Generate Android project
+        working-directory: kanjam
+        run: bash tools/setup_android.sh
+
       - name: Install dependencies
+        working-directory: kanjam
         run: flutter pub get
 
-      - name: Build APK
+      - name: Build release APK
+        working-directory: kanjam
         run: flutter build apk --release
 
       - name: Upload APK
